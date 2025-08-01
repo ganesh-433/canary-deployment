@@ -1,6 +1,8 @@
 # This file defines the values for our Kubernetes manifests.
 image:
   repository: ganesh243/canary-app
-  # This is the corrected expression.
-  # It points to the tag of the "primary" artifact configured in the Harness service.
   tag: "<+artifacts.primary.tag>"
+
+# This is a new variable to hold the 'harness.io/track' value.
+# We will let Harness provide this value automatically.
+harnessTrack: "{{ .Values.track }}"
