@@ -3,6 +3,5 @@ image:
   repository: ganesh243/canary-app
   tag: "<+artifacts.primary.tag>"
 
-# This is a new variable to hold the 'harness.io/track' value.
-# We will let Harness provide this value automatically.
-harnessTrack: "{{ .Values.track }}"
+# This variable is now set by Harness internally.
+harnessTrack: "{{ .Values.harnessTrack }}"
