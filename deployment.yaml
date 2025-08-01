@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-demo
+  labels:
+    app: canary-demo
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: canary-demo
+  template:
+    metadata:
+      labels:
+        app: canary-demo
+    spec:
+      containers:
+        - name: canary-demo
+          # The key part: using a Harness variable for the image.
+          # Harness will replace this with the chosen artifact tag at runtime.
+          image: ganesh243/canary-app:<+artifact.image.tag>
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_VERSION
+              # The same variable is passed to the application
+              value: "<+artifact.image.tag>"
