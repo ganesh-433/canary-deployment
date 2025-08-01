@@ -9,18 +9,14 @@ spec:
   selector:
     matchLabels:
       app: canary-demo
-      # Add a conditional label for Harness Canary deployments
-      {{ if .Values.harnessTrack }}
+      # This is the correct way to template a label value.
       harness.io/track: {{ .Values.harnessTrack }}
-      {{ end }}
   template:
     metadata:
       labels:
         app: canary-demo
-        # Add a conditional label for Harness Canary deployments
-        {{ if .Values.harnessTrack }}
+        # This is the correct way to template a label value.
         harness.io/track: {{ .Values.harnessTrack }}
-        {{ end }}
     spec:
       containers:
         - name: canary-demo
