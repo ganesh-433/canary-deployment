@@ -16,12 +16,11 @@ spec:
     spec:
       containers:
         - name: canary-demo
-          # The key part: using a Harness variable for the image.
-          # Harness will replace this with the chosen artifact tag at runtime.
-          image: ganesh243/canary-app:<+artifact.image.tag>
+          # This now pulls the image from the values.yaml file.
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: 8080
           env:
             - name: APP_VERSION
-              # The same variable is passed to the application
-              value: "<+artifact.image.tag>"
+              # The same value is passed as an environment variable.
+              value: "{{ .Values.image.tag }}"
