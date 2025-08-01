@@ -9,18 +9,24 @@ spec:
   selector:
     matchLabels:
       app: canary-demo
+      # Add a conditional label for Harness Canary deployments
+      {{ if .Values.harnessTrack }}
+      harness.io/track: {{ .Values.harnessTrack }}
+      {{ end }}
   template:
     metadata:
       labels:
         app: canary-demo
+        # Add a conditional label for Harness Canary deployments
+        {{ if .Values.harnessTrack }}
+        harness.io/track: {{ .Values.harnessTrack }}
+        {{ end }}
     spec:
       containers:
         - name: canary-demo
-          # This now pulls the image from the values.yaml file.
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: 8080
           env:
             - name: APP_VERSION
-              # The same value is passed as an environment variable.
               value: "{{ .Values.image.tag }}"
